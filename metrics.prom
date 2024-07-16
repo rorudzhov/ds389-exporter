@@ -1,0 +1,102 @@
+# HELP ds389_bind_errors Total number of bind operations rejected due to security-related errors
+# TYPE ds389_bind_errors counter
+ds389_bind_errors 4
+# HELP ds389_bind_operations Total number of bind operations performed on the server
+# TYPE ds389_bind_operations counter
+ds389_bind_operations{type="ANONYMOUS"} 0
+ds389_bind_operations{type="SIMPLE"} 148
+ds389_bind_operations{type="STRONG"} 583
+ds389_bind_operations{type="UNAUTHORIZED"} 0
+# HELP ds389_cache_entries Number of entries currently cached in the server's cache
+# TYPE ds389_cache_entries gauge
+ds389_cache_entries 0
+# HELP ds389_cache_hits_count Total number of times entries have been found in the cache and returned without accessing the backend storage
+# TYPE ds389_cache_hits_count counter
+ds389_cache_hits_count 0
+# HELP ds389_completed_operations Total number of directory operations completed by the server
+# TYPE ds389_completed_operations counter
+ds389_completed_operations 9780
+# HELP ds389_connections_in_max_threads Number of connections currently utilizing the maximum allowed threads
+# TYPE ds389_connections_in_max_threads counter
+ds389_connections_in_max_threads 0
+# HELP ds389_connections_max_threads Total number of concurrent connections that the LDAP server can service simultaneously using the maximum number of threads
+# TYPE ds389_connections_max_threads counter
+ds389_connections_max_threads 0
+# HELP ds389_consumer_hits Total number of times entries from the supplier's database have been accessed by consumer servers
+# TYPE ds389_consumer_hits counter
+ds389_consumer_hits 0
+# HELP ds389_copy_entries Total number of operations to copy or move entries between different containers or subsections
+# TYPE ds389_copy_entries counter
+ds389_copy_entries 0
+# HELP ds389_current_connections Number of active connections to the server
+# TYPE ds389_current_connections gauge
+ds389_current_connections 12
+# HELP ds389_current_connections_at_max_threads Number of connections currently utilizing the maximum allowed threads per connection
+# TYPE ds389_current_connections_at_max_threads gauge
+ds389_current_connections_at_max_threads 0
+# HELP ds389_dtable_size Size of the Directory Server descriptor table
+# TYPE ds389_dtable_size gauge
+ds389_dtable_size 63773
+# HELP ds389_errors Total number of errors that occurred on the server
+# TYPE ds389_errors counter
+ds389_errors 787
+# HELP ds389_initiated_operations Total number of directory operations initiated by clients and processed by the server
+# TYPE ds389_initiated_operations counter
+ds389_initiated_operations 9781
+# HELP ds389_max_threads_per_conn_hits Total number of times the maximum threads per connection limit has been reached
+# TYPE ds389_max_threads_per_conn_hits counter
+ds389_max_threads_per_conn_hits 0
+# HELP ds389_number_backends Number of alternative backends or data stores in use that are integrated and used by the LDAP server
+# TYPE ds389_number_backends gauge
+ds389_number_backends 3
+# HELP ds389_operations Total number of entry operations by type processed by the server
+# TYPE ds389_operations counter
+ds389_operations{type="ADD"} 0
+ds389_operations{type="COMPARE"} 0
+ds389_operations{type="DELETE"} 0
+ds389_operations{type="MODIFY"} 100
+ds389_operations{type="MODIFY_RND"} 0
+ds389_operations{type="SEARCH"} 7383
+# HELP ds389_read_waiters Number of threads waiting for read operations to complete
+# TYPE ds389_read_waiters gauge
+ds389_read_waiters 0
+# HELP ds389_returned_entries Total number of entries returned by search operations on the server
+# TYPE ds389_returned_entries counter
+ds389_returned_entries 5625
+# HELP ds389_returned_referrals Total number of referrals returned to the client in response to its request to the LDAP server
+# TYPE ds389_returned_referrals counter
+ds389_returned_referrals 0
+# HELP ds389_rx_bytes Total number of bytes received by the server
+# TYPE ds389_rx_bytes counter
+ds389_rx_bytes 0
+# HELP ds389_scape_duration_millis Duration of the request to obtain metrics in milliseconds
+# TYPE ds389_scape_duration_millis gauge
+ds389_scape_duration_millis 19
+# HELP ds389_search_operations_level Total number of search operations by level executed by the server
+# TYPE ds389_search_operations_level counter
+ds389_search_operations_level{type="ONE"} 427
+ds389_search_operations_level{type="SUBTREE"} 3846
+# HELP ds389_security_errors Total number of security errors that occurred on the server
+# TYPE ds389_security_errors counter
+ds389_security_errors 4
+# HELP ds389_startup_timestamp Server startup unix timestamp
+# TYPE ds389_startup_timestamp gauge
+ds389_startup_timestamp 1.721074704e+09
+# HELP ds389_supplier_entries Total number of entries that were received from the data provider
+# TYPE ds389_supplier_entries counter
+ds389_supplier_entries 0
+# HELP ds389_threads Total number of threads currently active in the server
+# TYPE ds389_threads gauge
+ds389_threads 20
+# HELP ds389_total_connections Total number of connections made to the server
+# TYPE ds389_total_connections counter
+ds389_total_connections 349
+# HELP ds389_tx_bytes Total number of bytes transferred by the server
+# TYPE ds389_tx_bytes counter
+ds389_tx_bytes 4.571223e+06
+# HELP ds389_uptime Uptime in seconds
+# TYPE ds389_uptime gauge
+ds389_uptime 85161
+# HELP ds389_version Version 389 Directory Server
+# TYPE ds389_version gauge
+ds389_version{version="389-Directory/2.4.5 B2024.152.0000"} 1

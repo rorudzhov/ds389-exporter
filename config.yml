@@ -1,0 +1,4 @@
+server: ipa0.home.local
+port: 389
+bind_dn: uid=monitor,cn=users,cn=compat,dc=home,dc=local
+bind_password: MyStrongPassword
