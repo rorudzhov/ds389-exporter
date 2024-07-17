@@ -1,0 +1,11 @@
+---
+- hosts: all
+  gather_facts: no
+
+  vars:
+    managed_by: |
+      # WARNING! This file managed by Ansible!
+      # Please do not modify this file manually
+
+  roles:
+    - role: "{{ role }}"

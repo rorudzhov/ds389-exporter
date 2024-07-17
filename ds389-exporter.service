@@ -1,0 +1,17 @@
+[Unit]
+Description=389 Directory Server Exporter
+After=network.target
+
+[Service]
+Type=simple
+User=prometheus
+ExecStart=/opt/ds389-exporter/ds389-exporter \
+                --config.file /opt/ds389-exporter/config.yml \
+                --log.level info \
+                --web.listen.address 0.0.0.0:9389 \
+                --web.telemetry-path /metrics
+Restart=on-failure
+RestartSec=15s
+
+[Install]
+WantedBy=multi-user.target

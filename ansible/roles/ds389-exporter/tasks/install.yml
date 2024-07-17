@@ -1,0 +1,106 @@
+---
+- name: Add systemd user
+  user:
+    name: "{{ ds389_exporter_systemd_user }}"
+    shell: "/sbin/nologin"
+  when: ds389_exporter_systemd_user != "root"
+  become: true
+
+- name: Add systemd group
+  group:
+    name: "{{ ds389_exporter_systemd_group }}"
+  when: ds389_exporter_systemd_group != "root"
+  become: true
+
+- name: Create project dir
+  file:
+    state: directory
+    path: "{{ ds389_exporter_project_dir }}"
+    mode: 0755
+    owner: "{{ ds389_exporter_systemd_user }}"
+    group: "{{ ds389_exporter_systemd_group }}"
+  become: true
+
+- name: Check installed ds389-exporter
+  shell: |
+    /usr/bin/ls {{ ds389_exporter_project_dir }}ds389-exporter
+  register: ds389_exporter_file_status
+  failed_when: false
+
+- block:
+    - name: Make temp dir
+      file:
+        state: directory
+        path: "/tmp/ds389-exporter/"
+        mode: 0755
+        owner: "{{ ds389_exporter_systemd_user }}"
+        group: "{{ ds389_exporter_systemd_group }}"
+      become: true
+
+    - name: Set facts
+      set_fact:
+        ds389_exporter_arch_basename: "{{ ds389_exporter_download_url | basename }}"
+
+    - name: Download last release ds389-exporter
+      get_url:
+        url: "{{ ds389_exporter_download_url }}"
+        dest: "/tmp/ds389-exporter/{{ ds389_exporter_arch_basename }}"
+      become: true
+
+    - name: Extract files
+      unarchive:
+        src: "/tmp/ds389-exporter/{{ ds389_exporter_arch_basename }}"
+        dest: "/tmp/ds389-exporter/"
+        remote_src: true
+        mode: 0755
+        owner: "{{ ds389_exporter_systemd_user }}"
+        group: "{{ ds389_exporter_systemd_group }}"
+      become: true
+
+    - name: Move ds389-exporter file to {{ ds389_exporter_project_dir }}
+      copy:
+        remote_src: true
+        src: "/tmp/ds389-exporter/{{ ds389_exporter_arch_basename.replace('.tar.gz', '') }}"
+        dest: "{{ ds389_exporter_project_dir }}ds389-exporter"
+        mode: 0744
+        owner: "{{ ds389_exporter_systemd_user }}"
+        group: "{{ ds389_exporter_systemd_group }}"
+      become: true
+
+    - name: Remove temp files
+      file:
+        path: "/tmp/ds389-exporter/"
+        state: absent
+      become: true
+  when: ds389_exporter_file_status.rc != 0
+
+- name: Make config.yml file
+  template:
+    src: "config.yml.j2"
+    dest: "{{ ds389_exporter_project_dir }}/config.yml"
+    mode: 0600
+    owner: "{{ ds389_exporter_systemd_user }}"
+    group: "{{ ds389_exporter_systemd_group }}"
+  become: true
+
+- name: Make systemd unit file
+  template:
+    src: "ds389-exporter.service.j2"
+    dest: "{{ ds389_exporter_systemd_unit_path }}"
+    mode: 0644
+    owner: "{{ ds389_exporter_systemd_user }}"
+    group: "{{ ds389_exporter_systemd_group }}"
+  become: true
+
+- name: Enable and start exporter
+  systemd:
+    name: "{{ ds389_exporter_systemd_unit_name }}"
+    enabled: true
+    state: "restarted"
+    daemon_reload: true
+  become: true
+
+- name: Check exporter status
+  shell: "/usr/bin/systemctl is-active {{ ds389_exporter_systemd_unit_name }}"
+  register: exporter_status
+  failed_when: exporter_status.rc != 0

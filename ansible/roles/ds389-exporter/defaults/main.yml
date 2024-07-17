@@ -1,0 +1,26 @@
+---
+# URL for download
+ds389_exporter_download_url: "https://github.com/rorudzhov/ds389-exporter/releases/download/1.0/ds389-exporter-1.0-linux-amd64.tar.gz"
+
+# Systemd specs
+ds389_exporter_systemd_user: "prometheus"
+ds389_exporter_systemd_group: "prometheus"
+ds389_exporter_systemd_unit_name: "ds389-exporter.service"
+ds389_exporter_systemd_unit_path: "/etc/systemd/system/{{ ds389_exporter_systemd_unit_name }}"
+
+# Paths
+ds389_exporter_project_dir: "/opt/ds389-exporter/"
+
+# Start parameters
+ds389_exporter_parameters:
+  - "--config.file /opt/ds389-exporter/config.yml"
+  - "--log.level info"
+  - "--web.listen.address 0.0.0.0:9389"
+  - "--web.telemetry-path /metrics"
+
+# Configuration
+ds389_exporter_configuration:
+  server: ipa0.home.local
+  port: 389
+  bind_dn: uid=monitor,cn=users,cn=compat,dc=home,dc=local
+  bind_password: MyStrongPassword

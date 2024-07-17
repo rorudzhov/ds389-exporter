@@ -1,0 +1,25 @@
+---
+
+- name: Stop and disable systemd unit
+  systemd:
+    name: "{{ ds389_exporter_systemd_unit_name }}"
+    enabled: false
+    state: "stopped"
+  become: true
+
+- name: Remove project dir
+  file:
+    state: absent
+    path: "{{ ds389_exporter_project_dir }}"
+  become: true
+
+- name: Remove systemd unit
+  file:
+    state: absent
+    path: "{{ ds389_exporter_systemd_unit_path }}"
+  become: true
+
+- name: Daemon reload
+  systemd:
+    daemon_reload: true
+  become: true
