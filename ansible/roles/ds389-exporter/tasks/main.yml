@@ -1,0 +1,10 @@
+---
+- name: Install ds389-exporter
+  import_tasks: "install.yml"
+  tags:
+    - "install"
+
+- name: Uninstall ds389-exporter
+  import_tasks: "uninstall.yml"
+  tags:
+    - "uninstall"
