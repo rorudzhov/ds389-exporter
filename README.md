@@ -88,6 +88,27 @@ time="2024-07-16T21:47:15+03:00" level=info msg="Metrics are available at http:/
 
 4️⃣ Visit page http://ipa0.home.local:9389/metrics for get metrics. if you have configured everything correctly you will see the [metrics](https://github.com/rorudzhov/ds389-exporter/blob/dev/metrics.prom)
 
+5️⃣ I recommend using a [systemd unit](ds389-exporter.service) for autonomous operation and ease of management
+```unit file (systemd)
+[Unit]
+Description=389 Directory Server Exporter
+After=network.target
+
+[Service]
+Type=simple
+User=prometheus
+ExecStart=/opt/ds389-exporter/ds389-exporter \
+                --config.file /opt/ds389-exporter/config.yml \
+                --log.level info \
+                --web.listen.address 0.0.0.0:9389 \
+                --web.telemetry-path /metrics
+Restart=on-failure
+RestartSec=15s
+
+[Install]
+WantedBy=multi-user.target
+```
+
 ## Ansible
 For convenient mass deployment, you can use a ready-made [ansible role](ansible%2Froles%2Fds389-exporter). Just run it
 ```shell
