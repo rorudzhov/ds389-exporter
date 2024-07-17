@@ -76,7 +76,7 @@ bind_password: MyStrongPassword
 | --config.file        | ./config.yml  | Path to configuration file                                                                    |
 | --log.level          | info          | Only log messages with the given severity or above. One of: [debug, info, warn, error, fatal] |
 | --web.listen.address | 0.0.0.0:9389  | Address to listen on for get telemetry                                                        |
-| --web.telemetry-pat  | /metrics      | Path under which to expose metrics                                                            |
+| --web.telemetry-path | /metrics      | Path under which to expose metrics                                                            |
 
 3️⃣ If the exporter launched successfully, you will see a log like this
 
@@ -87,6 +87,13 @@ time="2024-07-16T21:47:15+03:00" level=info msg="Metrics are available at http:/
 ```
 
 4️⃣ Visit page http://ipa0.home.local:9389/metrics for get metrics. if you have configured everything correctly you will see the [metrics](https://github.com/rorudzhov/ds389-exporter/blob/dev/metrics.prom)
+
+## Ansible
+For convenient mass deployment, you can use a ready-made [ansible role](ansible%2Froles%2Fds389-exporter). Just run it
+```shell
+ansible-playbook -i ipa0.home.local, playbook.yml -e "role=ds389-exporter" -t install
+```
+To uninstall use the `-t uninstall` tag
 
 ## Build
 
