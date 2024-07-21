@@ -132,6 +132,22 @@ file="ds389-exporter"
 go build -ldflags "-s -w" -o $file main.go
 ```
 
+## Docker
+
+You can also use this exporter in a docker container environment. Just run it:
+
+```shell
+docker build -t ds389-exporter .
+```
+
+```shell
+docker run --rm -v ./config.yml:/root/config.yml -p 9389:9389  ds389-exporter \
+          --config.file /root/config.yml \
+          --log.level info \
+          --web.listen.address 0.0.0.0:9389 \
+          --web.telemetry-path /metrics
+```
+
 ## Prometheus Configuration
 
 Add the following job to your Prometheus configuration file (`prometheus.yml`):
